@@ -27,6 +27,7 @@ class Profile(models.Model):
 
 class Song(models.Model):
     title = models.CharField(max_length=500)
+    artists = models.ManyToManyField(Artist)
     length = models.IntegerField()
     release_date = models.DateTimeField(auto_now_add=True)
     lyrics = models.TextField()
