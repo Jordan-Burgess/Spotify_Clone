@@ -28,7 +28,7 @@ class Playlist(models.Model):
     playlist_image = models.ImageField(null=True, blank=True, upload_to="playlist_images/")
     description = models.CharField(max_length=1000)
 
-    songs = models.ForeignKey(Song)
+    songs = models.ForeignKey(Song, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
