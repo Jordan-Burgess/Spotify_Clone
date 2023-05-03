@@ -4,5 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static 
 # For the API
 urlpatterns = [path("users/", views.Users.as_view(), name="users" ),
-               path("users/<int:id>/", views.ProfileView.as_view(), name="userShowPage")
+               path("users/<int:id>/", views.ProfileView.as_view(), name="userShowPage"),
+               path("artists/", views.AllArtists.as_view(), name="allArtists"),
+               path("artists/<int:id>/", views.ArtistView.as_view(), name="oneArtistShowPage")
                ] 
