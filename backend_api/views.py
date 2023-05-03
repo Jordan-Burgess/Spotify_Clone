@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .models import User, Profile
+from .models import User, Profile, Song
 from .serializers import UserSerializer, ProfileSerializer
 from django.http import JsonResponse
 # Create your views here.
@@ -18,3 +18,7 @@ class ProfileView(APIView):
         data = Profile.objects.all().filter(user_id=id) #user_id because I use a OneToOneField in the views.py 
         serializer = ProfileSerializer(data, many=True) #complex data to simple data
         return JsonResponse(serializer.data, safe=False)
+
+class AllSongs(APIView):
+    def get(self, request):
+        data = Song.objects.all()
