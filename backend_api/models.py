@@ -12,19 +12,6 @@ class Artist(models.Model):
     def __str__(self):
         return self.name
 
-
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE) #first field inherited from the User model from django
-    country = models.CharField(max_length=500) 
-    display_name = models.CharField(max_length=500)
-    isPremium = models.BooleanField()
-    profilePic = models.ImageField(null=True, blank=True, upload_to="profile_pictures/")
-
-    artists = models.ManyToManyField(Artist) 
-
-    def __str__(self):
-        return self.user.username
-
 class Song(models.Model):
     title = models.CharField(max_length=500)
     artists = models.ManyToManyField(Artist)
@@ -35,4 +22,29 @@ class Song(models.Model):
 
     def __str__(self):
         return self.title
+
+class Playlist(models.Model):
+    name = models.CharField(max_length=500)
+    playlist_image = models.ImageField(null=True, blank=True, upload_to="playlist_images/")
+    description = models.CharField(max_length=1000)
+
+    songs = models.ForeignKey(Song)
+
+    def __str__(self):
+        return self.name
+    
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE) #first field inherited from the User model from django
+    country = models.CharField(max_length=500) 
+    display_name = models.CharField(max_length=500)
+    isPremium = models.BooleanField()
+    profilePic = models.ImageField(null=True, blank=True, upload_to="profile_pictures/")
+
+    artists = models.ManyToManyField(Artist) 
+    playlists = models.ForeignKey(Playlist, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+
 
