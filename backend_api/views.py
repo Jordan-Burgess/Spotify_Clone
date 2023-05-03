@@ -24,3 +24,9 @@ class AllSongs(APIView):
         data = Song.objects.all()
         serializer = SongSerializer(data, many=True)
         return JsonResponse(serializer.data, safe=False)
+    
+class SongView(APIView):
+    def get(self, request, id):
+        data = Song.objects.filter(id=id)
+        serializer = SongSerializer(data, many=True)
+        return JsonResponse(serializer.data, safe=False)
