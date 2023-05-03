@@ -14,6 +14,7 @@ class Users(APIView):
 
 class ProfileView(APIView):
     def get(self, requests, id):
-        data = Profile.objects.all().filter(id=id)
+        print(Profile.objects.all())
+        data = Profile.objects.all().filter(user_id=id) #user_id because I use a OneToOneField in the views.py 
         serializer = ProfileSerializer(data, many=True) #complex data to simple data
         return JsonResponse(serializer.data, safe=False)
