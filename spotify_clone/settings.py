@@ -81,7 +81,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "spotify_clone",
-        "USER": "postgres"
+        # "USER": "postgres"
     }
 }
 
