@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .models import User, Profile, Song, Artist, Playlist
-from .serializers import UserSerializer, ProfileSerializer, SongSerializer, ArtistSerializer, PlaylistSerializer
+from .models import User, Profile, Song, Artist, Playlist, Album
+from .serializers import UserSerializer, ProfileSerializer, SongSerializer, ArtistSerializer, PlaylistSerializer, AlbumSerializer
 from django.http import JsonResponse
 # Create your views here.
 # get the data as a database as a json and use it in the frontend 
@@ -46,4 +46,16 @@ class AllPlaylists(APIView):
     def get(self, requests):
         data = Playlist.objects.all()
         serializer = PlaylistSerializer(data, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    
+class AllAlbums(APIView):
+    def get(self, request):
+        data = Album.objects.all()
+        serializer = AlbumSerializer(data, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+class AlbumView(APIView):
+    def get(self, request, id):
+        data = Album.objects.filter(id=id)
+        serializer = AlbumSerializer(data, many=True)
         return JsonResponse(serializer.data, safe=False)
