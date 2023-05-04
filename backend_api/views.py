@@ -54,3 +54,8 @@ class AllAlbums(APIView):
         serializer = AlbumSerializer(data, many=True)
         return JsonResponse(serializer.data, safe=False)
 
+class AlbumView(APIView):
+    def get(self, request, id):
+        data = Album.objects.filter(id=id)
+        serializer = AlbumSerializer(data, many=True)
+        return JsonResponse(serializer.data, safe=False)
