@@ -12,12 +12,24 @@ class Users(APIView):
         serializer = UserSerializer(data, many=True) #complex data to simple data
         return JsonResponse(serializer.data, safe=False)
 
-    
+
+
 class ProfileView(APIView):
     def get(self, requests, id):
         data = Profile.objects.all().filter(user_id=id) #user_id because I use a OneToOneField in the views.py 
         serializer = ProfileSerializer(data, many=True) 
         return JsonResponse(serializer.data, safe=False)
+    
+    def post(self, requests, id): 
+        requests.data["user"] = id
+        serializer = ProfileSerializer(data=requests.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, safe=False)
+        else:
+            return JsonResponse(serializer.errors)
+
+
 
 class AllSongs(APIView):
     def get(self, request):
@@ -69,4 +81,5 @@ class RegisterView(APIView):
             return JsonResponse(serializer.data, safe=False)
         else:
             return JsonResponse(serializer.errors)
-        
+
+
