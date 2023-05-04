@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from .models import User, Profile, Song, Artist, Playlist, Album
-from .serializers import UserSerializer, ProfileSerializer, SongSerializer, ArtistSerializer, PlaylistSerializer, AlbumSerializer
+from .serializers import UserSerializer, ProfileSerializer, SongSerializer, ArtistSerializer, PlaylistSerializer, AlbumSerializer, RegisterSerializer
 from django.http import JsonResponse
 # Create your views here.
 # get the data as a database as a json and use it in the frontend 
@@ -12,11 +12,24 @@ class Users(APIView):
         serializer = UserSerializer(data, many=True) #complex data to simple data
         return JsonResponse(serializer.data, safe=False)
 
+
+
 class ProfileView(APIView):
     def get(self, requests, id):
         data = Profile.objects.all().filter(user_id=id) #user_id because I use a OneToOneField in the views.py 
         serializer = ProfileSerializer(data, many=True) 
         return JsonResponse(serializer.data, safe=False)
+    
+    def post(self, requests, id): 
+        requests.data["user"] = id
+        serializer = ProfileSerializer(data=requests.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, safe=False)
+        else:
+            return JsonResponse(serializer.errors)
+
+
 
 class AllSongs(APIView):
     def get(self, request):
@@ -59,3 +72,14 @@ class AlbumView(APIView):
         data = Album.objects.filter(id=id)
         serializer = AlbumSerializer(data, many=True)
         return JsonResponse(serializer.data, safe=False)
+
+class RegisterView(APIView):
+    def post(self,request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, safe=False)
+        else:
+            return JsonResponse(serializer.errors)
+
+
