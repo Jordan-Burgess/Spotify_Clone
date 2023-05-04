@@ -14,4 +14,5 @@ urlpatterns = [
     path("playlists/", views.AllPlaylists.as_view(), name="playlists"),
     path("albums/", views.AllAlbums.as_view(), name="allAlbums"),
     path("albums/<int:id>/", views.AlbumView.as_view(), name="albumShow"),
+    path("register/", views.RegisterView.as_view(), name="registerShow")
 ] 
