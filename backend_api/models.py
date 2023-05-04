@@ -41,7 +41,7 @@ class Profile(models.Model):
     profilePic = models.ImageField(null=True, blank=True, upload_to="profile_pictures/")
 
     artists = models.ManyToManyField(Artist) 
-    playlists = models.ForeignKey(Playlist, on_delete=models.CASCADE, null=True)
+    playlists = models.ManyToManyField(Playlist, null=True)
 
     def __str__(self):
         return self.user.username
