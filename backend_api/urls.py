@@ -11,5 +11,6 @@ urlpatterns = [
     path("songs/<int:id>/", views.SongView.as_view(), name="songShowPage"),
     path("artists/", views.AllArtists.as_view(), name="artists"),
     path("artists/<int:id>/", views.ArtistView.as_view(), name="oneArtistShowPage"),
-    path("playlists/", views.AllPlaylists.as_view(), name="playlists")
+    path("playlists/", views.AllPlaylists.as_view(), name="playlists"),
+    path("albums/", views.AllAlbums.as_view(), name="allAlbums"),
 ] 
