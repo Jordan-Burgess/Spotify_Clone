@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .models import User, Profile, Song, Artist, Playlist
+from .models import User, Profile, Song, Artist, Playlist, Album
 from .serializers import UserSerializer, ProfileSerializer, SongSerializer, ArtistSerializer, PlaylistSerializer
 from django.http import JsonResponse
 # Create your views here.
@@ -47,3 +47,5 @@ class AllPlaylists(APIView):
         data = Playlist.objects.all()
         serializer = PlaylistSerializer(data, many=True)
         return JsonResponse(serializer.data, safe=False)
+    
+
