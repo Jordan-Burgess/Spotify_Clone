@@ -12,7 +12,11 @@ class Users(APIView):
         serializer = UserSerializer(data, many=True) #complex data to simple data
         return JsonResponse(serializer.data, safe=False)
 
-
+class AllProfiles(APIView):
+    def get(self, requests):
+        data = Profile.objects.all()
+        serializer=ProfileSerializer(data, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
 class ProfileView(APIView):
     def get(self, requests, id):
@@ -21,13 +25,23 @@ class ProfileView(APIView):
         return JsonResponse(serializer.data, safe=False)
     
     def post(self, requests, id): 
-        requests.data["user"] = id
+        requests.data["user"] = id #create a user with the id
         serializer = ProfileSerializer(data=requests.data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, safe=False)
         else:
             return JsonResponse(serializer.errors)
+    
+    def put(self, requests, id):
+        data = Profile.objects.get(user_id=id)
+        serializer = ProfileSerializer(data, data=requests.data) #replace the old data with the new.
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, safe=False)
+        else:
+            return JsonResponse(serializer.errors)
+
 
 
 
